@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
+const https = require("https");
 
 const app = express();
 
@@ -20,10 +21,39 @@ app.get("/", function(req, res) {
 
 app.post("/", function(req, res) {
 
-    let firstName = req.body.firstName;
-    let lastName = req.body.lastName;
-    let email = req.body.email;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const email = req.body.email;
 
     console.log(firstName, lastName, email);
+
+    const data = {
+        members: [
+            {
+                email_address: email,
+                status: "subscribed",
+                merge_fields: {
+                    FNAME: firstName,
+                    LNAME: lastName
+                }
+            }
+        ]
+    }
+
+    const jsonData = JSON.stringify(data);
+    const url = "https://us17.api.mailchimp.com/3.0/lists/b31a2f81ec";
+    const options = {
+        method: "POST",
+        auth: "ariana:664cff50dbe1238f9564562c44d55777-us17"
+    }
+
+    const request = https.request(url, options, function(response) {
+        response.on("data", function(data) {
+            console.log(JSON.parse(data));
+        })
+    });
+
+    request.write(jsonData);
+    request.end();
 
 });
