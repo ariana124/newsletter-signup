@@ -9,12 +9,13 @@
         <!-- Bootstrap CDN -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+        <!-- We don't have to write public/css/style.css because in the app.js file we have all our static files in the public folder making the paths to the stylesheets and images relative to the public folder.-->
         <!-- Custom Stylesheet -->
-        <link href="style.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
     </head>
     <body class="text-center">
-        <form class="form-signin">
-            <img class="mb-4" src="./images/email-icon.png">
+        <form class="form-signin" action="/" method="post">
+            <img class="mb-4" src="images/email-icon.png">
             <h1 class="h3 mb-3 font-weight-normal">Newsletter Signup!</h1>
 
             
