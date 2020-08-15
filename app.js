@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
 const https = require("https");
+require('dotenv').config();
 
 const app = express();
 
@@ -10,7 +11,7 @@ app.use(express.static("public"));
 
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.listen(process.env.PORT || 3000, function() {
+app.listen(3000 || process.env.PORT, function() {
     console.log("Server is running on port 3000.");
 });
 
@@ -41,10 +42,13 @@ app.post("/", function(req, res) {
     }
 
     const jsonData = JSON.stringify(data);
-    const url = "https://us17.api.mailchimp.com/3.0/lists/b31a2f81ec";
+    const apiKey = process.env.API_KEY;
+    const listId = process.env.LIST_ID;
+    const dc = process.env.DC;
+    const url = `https://${dc}.api.mailchimp.com/3.0/lists/${listId}`;
     const options = {
         method: "POST",
-        auth: "ariana:664cff50dbe1238f9564562c44d55777-us17"
+        auth: `ariana:${apiKey}`
     }
 
     const request = https.request(url, options, function(response) {
